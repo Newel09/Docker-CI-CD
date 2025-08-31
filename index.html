@@ -13,9 +13,12 @@
     html, body { height: 100%; }
     body {
       margin: 0;
-      background: var(--bg);
-      display: grid;
-      place-items: center;
+      background: #181818;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       min-height: 100vh;
       font-family: 'Segoe UI', Arial, sans-serif;
       overflow: hidden;
@@ -27,53 +30,44 @@
       z-index: 2;
     }
     .cascade {
-      display: inline-block;
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: 0.5px;
-      font-size: clamp(32px, 7vw, 100px);
-      background: linear-gradient(
-        90deg,
-        #ff6b6b,
-        #f6d365,
-        #fda085,
-        #f4d03f,
-        #42e695,
-        #3bb2b8,
-        #5b86e5,
-        #a66cff,
-        #ff6b6b
-      );
-      background-size: 400% auto;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: gradientShift 2s linear infinite;
-      text-shadow: 0 0 0 rgba(0,0,0,0);
-      filter: drop-shadow(0 0 16px #fff8);
-    }
-    @keyframes gradientShift {
-      0% { background-position: 0% center; }
-      100% { background-position: 400% center; }
+      font-size: 4rem;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      display: flex;
+      flex-direction: row;
+      gap: 0.1em;
+      margin-bottom: 2rem;
     }
     .cascade span {
+      animation: cascade 1s infinite alternate;
       display: inline-block;
-      transform: translateY(32px) scale(0.98) rotate(-8deg);
-      opacity: 0;
-      filter: drop-shadow(0 6px 24px rgba(0,0,0,0.35));
-      animation: dropIn 650ms cubic-bezier(.2,.8,.2,1) calc(var(--i) * var(--delay-step)) forwards,
-                 flash 2s infinite alternate calc(var(--i) * 60ms);
     }
-    @keyframes dropIn {
+    /* Multicolour effect */
+    .cascade span:nth-child(1) { color: #ff595e; animation-delay: 0s; }
+    .cascade span:nth-child(2) { color: #ffca3a; animation-delay: 0.1s; }
+    .cascade span:nth-child(3) { color: #8ac926; animation-delay: 0.2s; }
+    .cascade span:nth-child(4) { color: #1982c4; animation-delay: 0.3s; }
+    .cascade span:nth-child(5) { color: #6a4c93; animation-delay: 0.4s; }
+    .cascade span:nth-child(6) { color: #ff595e; animation-delay: 0.5s; }
+    .cascade span:nth-child(7) { color: #ffca3a; animation-delay: 0.6s; }
+    .cascade span:nth-child(8) { color: #8ac926; animation-delay: 0.7s; }
+    .cascade span:nth-child(9) { color: #1982c4; animation-delay: 0.8s; }
+    .cascade span:nth-child(10) { color: #6a4c93; animation-delay: 0.9s; }
+    .cascade span:nth-child(11) { color: #ff595e; animation-delay: 1s; }
+
+    @keyframes cascade {
       to {
-        transform: translateY(0) scale(1) rotate(0deg);
-        opacity: 1;
+        transform: translateY(-20px) scale(1.2);
+        text-shadow: 0 4px 20px rgba(255,255,255,0.3);
       }
     }
-    @keyframes flash {
-      0%   { filter: drop-shadow(0 0 24px #fff8); }
-      50%  { filter: drop-shadow(0 0 32px #fffa), brightness(1.2); }
-      100% { filter: drop-shadow(0 0 24px #fff8); }
+    .thank-you {
+      margin-top: 3rem;
+      font-size: 1.5rem;
+      color: #ffca3a;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+      text-shadow: 0 2px 8px #181818;
     }
     /* Animated background sparkles */
     .sparkle {
@@ -101,7 +95,14 @@
 <body>
   <div class="sparkle"></div>
   <main class="wrap">
-    <h1 class="cascade" aria-label="Hello, Cloud Computing is awesome!"></h1>
+    <div class="cascade">
+      <span>H</span><span>e</span><span>l</span><span>l</span><span>o</span>
+      <span>&nbsp;</span>
+      <span>C</span><span>l</span><span>o</span><span>u</span><span>d</span>
+    </div>
+    <div class="thank-you">
+      Thank you SHAD
+    </div>
   </main>
   <script>
     // Build cascading spans for each character
