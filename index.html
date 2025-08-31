@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -6,11 +6,9 @@
   <title>Hello, Cloud Computing is awesome!</title>
   <style>
     :root {
-      --bg: #2e2e2e;          /* grey background */
-      --delay-step: 40ms;     /* time between letters for the cascade */
+      --bg: #444;
+      --delay-step: 40ms;
     }
-
-    /* page layout */
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     body {
@@ -18,23 +16,22 @@
       background: var(--bg);
       display: grid;
       place-items: center;
-      padding: 24px;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      min-height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      overflow: hidden;
     }
-
-    /* headline container */
     .wrap {
       text-align: center;
       max-width: 1000px;
+      position: relative;
+      z-index: 2;
     }
-
-    /* multicolour animated gradient text */
     .cascade {
       display: inline-block;
       font-weight: 900;
       line-height: 1.08;
       letter-spacing: 0.5px;
-      font-size: clamp(28px, 6vw, 84px);
+      font-size: clamp(32px, 7vw, 100px);
       background: linear-gradient(
         90deg,
         #ff6b6b,
@@ -47,47 +44,65 @@
         #a66cff,
         #ff6b6b
       );
-      background-size: 200% auto;
+      background-size: 400% auto;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      animation: gradientShift 6s linear infinite;
-      text-shadow: 0 0 0 rgba(0,0,0,0); /* keeps edges crisp on some browsers */
+      animation: gradientShift 2s linear infinite;
+      text-shadow: 0 0 0 rgba(0,0,0,0);
+      filter: drop-shadow(0 0 16px #fff8);
     }
     @keyframes gradientShift {
-      to { background-position: 200% center; }
+      0% { background-position: 0% center; }
+      100% { background-position: 400% center; }
     }
-
-    /* cascading reveal (per-letter) */
     .cascade span {
       display: inline-block;
-      transform: translateY(24px) scale(0.98);
+      transform: translateY(32px) scale(0.98) rotate(-8deg);
       opacity: 0;
-      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.25));
-      animation: dropIn 650ms cubic-bezier(.2,.8,.2,1) calc(var(--i) * var(--delay-step)) forwards;
+      filter: drop-shadow(0 6px 24px rgba(0,0,0,0.35));
+      animation: dropIn 650ms cubic-bezier(.2,.8,.2,1) calc(var(--i) * var(--delay-step)) forwards,
+                 flash 2s infinite alternate calc(var(--i) * 60ms);
     }
     @keyframes dropIn {
       to {
-        transform: translateY(0) scale(1);
+        transform: translateY(0) scale(1) rotate(0deg);
         opacity: 1;
       }
     }
-
-    /* subtle footer */
-    .note {
-      margin-top: 16px;
-      color: #cfcfcf;
-      opacity: 0.8;
-      font-size: 14px;
+    @keyframes flash {
+      0%   { filter: drop-shadow(0 0 24px #fff8); }
+      50%  { filter: drop-shadow(0 0 32px #fffa), brightness(1.2); }
+      100% { filter: drop-shadow(0 0 24px #fff8); }
+    }
+    /* Animated background sparkles */
+    .sparkle {
+      position: absolute;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .sparkle span {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: sparkleMove 3s linear infinite;
+      background: radial-gradient(circle, #fff 60%, transparent 100%);
+    }
+    @keyframes sparkleMove {
+      to {
+        transform: translateY(100vh) scale(1.2);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="sparkle"></div>
   <main class="wrap">
     <h1 class="cascade" aria-label="Hello, Cloud Computing is awesome!"></h1>
-    <div class="note">Deployed in a Docker container · Nginx static site</div>
   </main>
-
   <script>
     // Build cascading spans for each character
     const message = "Hello, Cloud Computing is awesome!";
@@ -98,109 +113,18 @@
       s.textContent = ch;
       target.appendChild(s);
     });
-  </script>
-</body>
-</html>
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Hello, Cloud Computing is awesome!</title>
-  <style>
-    :root {
-      --bg: #2e2e2e;          /* grey background */
-      --delay-step: 40ms;     /* time between letters for the cascade */
-    }
 
-    /* page layout */
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    // Sparkle effect
+    const sparkle = document.querySelector('.sparkle');
+    function random(min, max) { return Math.random() * (max - min) + min; }
+    for(let i=0; i<40; i++) {
+      const sp = document.createElement('span');
+      sp.style.left = random(0, 100) + 'vw';
+      sp.style.top = random(-10, 90) + 'vh';
+      sp.style.width = sp.style.height = random(6, 18) + 'px';
+      sp.style.animationDelay = random(0, 3) + 's';
+      sparkle.appendChild(sp);
     }
-
-    /* headline container */
-    .wrap {
-      text-align: center;
-      max-width: 1000px;
-    }
-
-    /* multicolour animated gradient text */
-    .cascade {
-      display: inline-block;
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: 0.5px;
-      font-size: clamp(28px, 6vw, 84px);
-      background: linear-gradient(
-        90deg,
-        #ff6b6b,
-        #f6d365,
-        #fda085,
-        #f4d03f,
-        #42e695,
-        #3bb2b8,
-        #5b86e5,
-        #a66cff,
-        #ff6b6b
-      );
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: gradientShift 6s linear infinite;
-      text-shadow: 0 0 0 rgba(0,0,0,0); /* keeps edges crisp on some browsers */
-    }
-    @keyframes gradientShift {
-      to { background-position: 200% center; }
-    }
-
-    /* cascading reveal (per-letter) */
-    .cascade span {
-      display: inline-block;
-      transform: translateY(24px) scale(0.98);
-      opacity: 0;
-      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.25));
-      animation: dropIn 650ms cubic-bezier(.2,.8,.2,1) calc(var(--i) * var(--delay-step)) forwards;
-    }
-    @keyframes dropIn {
-      to {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-    }
-
-    /* subtle footer */
-    .note {
-      margin-top: 16px;
-      color: #cfcfcf;
-      opacity: 0.8;
-      font-size: 14px;
-    }
-  </style>
-</head>
-<body>
-  <main class="wrap">
-    <h1 class="cascade" aria-label="Hello, Cloud Computing is awesome!"></h1>
-    <div class="note">Deployed in a Docker container · Nginx static site</div>
-  </main>
-
-  <script>
-    // Build cascading spans for each character
-    const message = "Hello, Cloud Computing is awesome!";
-    const target = document.querySelector(".cascade");
-    message.split("").forEach((ch, i) => {
-      const s = document.createElement("span");
-      s.style.setProperty("--i", i);
-      s.textContent = ch;
-      target.appendChild(s);
-    });
   </script>
 </body>
 </html>
