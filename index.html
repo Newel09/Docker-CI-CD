@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello Cloud</title>
+  <style>
+    body {
+      background: #181818;
+      color: #fff;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .cascade {
+      font-size: 4rem;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      display: flex;
+      flex-direction: row;
+      gap: 0.1em;
+      margin-bottom: 2rem;
+    }
+    .cascade span {
+      animation: cascade 1s infinite alternate;
+      display: inline-block;
+    }
+    /* Multicolour effect */
+    .cascade span:nth-child(1) { color: #ff595e; animation-delay: 0s; }
+    .cascade span:nth-child(2) { color: #ffca3a; animation-delay: 0.1s; }
+    .cascade span:nth-child(3) { color: #8ac926; animation-delay: 0.2s; }
+    .cascade span:nth-child(4) { color: #1982c4; animation-delay: 0.3s; }
+    .cascade span:nth-child(5) { color: #6a4c93; animation-delay: 0.4s; }
+    .cascade span:nth-child(6) { color: #ff595e; animation-delay: 0.5s; }
+    .cascade span:nth-child(7) { color: #ffca3a; animation-delay: 0.6s; }
+    .cascade span:nth-child(8) { color: #8ac926; animation-delay: 0.7s; }
+    .cascade span:nth-child(9) { color: #1982c4; animation-delay: 0.8s; }
+    .cascade span:nth-child(10) { color: #6a4c93; animation-delay: 0.9s; }
+    .cascade span:nth-child(11) { color: #ff595e; animation-delay: 1s; }
+
+    @keyframes cascade {
+      to {
+        transform: translateY(-20px) scale(1.2);
+        text-shadow: 0 4px 20px rgba(255,255,255,0.3);
+      }
+    }
+    .thank-you {
+      margin-top: 3rem;
+      font-size: 1.5rem;
+      color: #ffca3a;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+      text-shadow: 0 2px 8px #181818;
+    }
+  </style>
+</head>
+<body>
+  <div class="cascade">
+    <span>H</span><span>e</span><span>l</span><span>l</span><span>o</
